@@ -15,6 +15,8 @@ A release is eligible only when every applicable gate has fresh evidence from th
 9. Start Electron from the release source and inspect the real window at wide and narrow sizes. Exercise project/task creation, one permission decision, tool trace, diff/undo, cancellation/resume, settings, and error/empty states.
 10. Review Git status and the final public repository tree; public history begins with one clean release commit and contains no private workflow directories, runtime state, transcripts, or hosted deployment.
 
+GitHub-hosted Windows runners do not expose a usable user DPAPI PowerShell module. CI therefore skips the single real-DPAPI switching smoke; it still runs vault isolation/concurrency tests. A release owner must run the full suite on a local Windows user session, where that smoke is required to pass.
+
 ## Invariants under test
 
 - one SDK agent loop;

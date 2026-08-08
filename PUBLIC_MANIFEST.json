@@ -215,8 +215,8 @@
     },
     {
       "path": "docs/QUALITY_GATES.md",
-      "bytes": 1965,
-      "sha256": "10b21888bf4a4f246d7acf3d70c8cb7921706fda59cd33ee23a3a3a7dbb1cbd9"
+      "bytes": 2266,
+      "sha256": "16bf52d11472388d533bea4b825102dc0a2b095d9d79ae493810796cbaaa1c28"
     },
     {
       "path": "docs/README.md",
@@ -970,8 +970,8 @@
     },
     {
       "path": "tests/provider-credential-vault.test.mjs",
-      "bytes": 5607,
-      "sha256": "3dd80804ea8de31b8de7241e15cc6aed7bd12b5946916bcc375b09420cdc2c12"
+      "bytes": 5778,
+      "sha256": "de97cccba4f113096aa2671f6043be701422818063bde8201ed769bbc3e22a87"
     },
     {
       "path": "tests/provider-visual-reviewer.test.mjs",

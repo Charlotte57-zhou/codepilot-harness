@@ -60,7 +60,13 @@ test("a warm runtime credential vault reloads changes written by the active runt
   });
 });
 
-test("switching providers restores only the selected provider credential", { skip: process.platform !== "win32" }, async () => {
+test("local Windows DPAPI switching restores only the selected provider credential", {
+  skip: process.platform !== "win32"
+    ? "Windows DPAPI only"
+    : process.env.GITHUB_ACTIONS === "true"
+      ? "GitHub-hosted Windows does not expose a usable user DPAPI module"
+      : false
+}, async () => {
   await withTemporaryDirectory(async (directory) => {
     const moduleUrl = pathToFileURL(resolve("src/model-runtime-config.mjs")).href;
     const script = `
