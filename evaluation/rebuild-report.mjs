@@ -1,0 +1,20 @@
+import { readdir, readFile, stat } from "node:fs/promises";
+import { join, resolve } from "node:path";
+import { controlledCases } from "./cases.mjs";
+import { summarizeResults, writeComparisonReport } from "./report.mjs";
+
+const repoRoot = resolve(new URL("..", import.meta.url).pathname.replace(/^\/(?:([A-Za-z]:))/, "$1"));
+const rawRoot = join(repoRoot, "evaluation", "artifacts", "raw");
+const requestedRunId = process.argv[2];
+const directories = (await readdir(rawRoot)).sort();
+const runId = requestedRunId ?? directories.at(-1);
+if (!runId || !(await stat(join(rawRoot, runId))).isDirectory()) throw new Error("Evaluation raw run not found");
+const files = (await readdir(join(rawRoot, runId))).filter((name) => name.endsWith(".json")).sort();
+const results = await Promise.all(files.map(async (name) => JSON.parse(await readFile(join(rawRoot, runId, name), "utf8"))));
+const expected = controlledCases.length * 2;
+if (results.length !== expected || new Set(results.map((row) => `${row.caseId}:${row.adapter}`)).size !== expected) throw new Error(`Expected ${expected} unique raw records, found ${results.length}`);
+const freeze = JSON.parse(await readFile(join(repoRoot, "evaluation", "freeze-manifest.json"), "utf8"));
+const adapterNames = ["codepilot", "claude-cli"];
+const summary = { schemaVersion: 1, runId, architectureFreeze: freeze.productCommit, model: freeze.model, isolation: freeze.isolation, byAdapter: summarizeResults(results, adapterNames), results };
+await writeComparisonReport({ resultsRoot: join(repoRoot, "evaluation", "results"), summary, cases: controlledCases });
+console.log(JSON.stringify(summary.byAdapter, null, 2));

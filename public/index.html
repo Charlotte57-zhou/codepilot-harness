@@ -1,0 +1,396 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CodePilot Workspace</title>
+    <link rel="icon" type="image/png" href="/assets/codepilot-mark.png" />
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#workspace-main">Skip to workspace</a>
+    <main class="workspace" id="workspace-main" data-sidebar-open="false" tabindex="-1">
+      <aside class="sidebar" id="workspace-sidebar" aria-label="项目与任务导航">
+        <div class="brand"><img class="brand-mark" src="/assets/codepilot-mark.png" alt="" aria-hidden="true" /><span>CodePilot</span></div>
+        <button class="new-session" id="new-session" type="button"><span class="nav-leading-icon" data-icon="plus" aria-hidden="true"></span><span>新建任务</span></button>
+        <button class="skills-nav-button" id="open-skills" type="button" aria-controls="skills-layer" aria-expanded="false"><span class="nav-leading-icon" data-icon="skills" aria-hidden="true"></span><span>技能</span><span id="skills-count" class="skills-count">--</span></button>
+        <button class="mcp-nav-button" id="open-mcp" type="button" aria-controls="mcp-layer" aria-expanded="false"><span class="nav-leading-icon" data-icon="mcp" aria-hidden="true"></span><span>MCP</span><span id="mcp-count" class="skills-count">--</span></button>
+        <div class="nav-label project-nav-label"><span>项目</span><button id="add-project" class="nav-label-action" type="button" aria-label="创建项目" title="创建项目"><span data-icon="plus" aria-hidden="true"></span></button></div>
+        <div class="nav-section">
+          <div id="session-list" class="session-list"></div>
+        </div>
+        <footer class="sidebar-bottom" aria-label="本地用户与设置">
+          <span class="sidebar-avatar" aria-hidden="true">CP</span>
+          <span class="sidebar-account-copy"><strong>本地用户</strong><small><span class="status-dot" aria-hidden="true"></span>本地运行时 · JSONL</small></span>
+          <button id="sidebar-settings" class="sidebar-settings-button" type="button" aria-haspopup="dialog" aria-label="打开设置" title="打开外观、活动与归档设置"><span data-icon="settings" aria-hidden="true"></span></button>
+        </footer>
+      </aside>
+      <button id="sidebar-scrim" class="sidebar-scrim" type="button" aria-label="关闭项目与任务导航" hidden></button>
+
+      <section class="conversation" aria-label="Agent 对话">
+        <header class="topbar">
+          <button id="sidebar-toggle" class="sidebar-toggle-button" type="button" aria-controls="workspace-sidebar" aria-expanded="false" aria-label="打开项目与任务导航"><span data-icon="menu" aria-hidden="true"></span></button>
+          <div class="topbar-title">
+            <div class="crumb" id="project-crumb">项目 / 加载中</div>
+            <h1 id="session-title">新建任务</h1>
+          </div>
+          <div class="topbar-actions">
+            <span class="pill"><span class="pulse"></span> 运行时就绪</span>
+            <button class="mobile-skills-button" id="open-skills-mobile" type="button" aria-controls="skills-layer" aria-expanded="false">技能</button>
+            <button class="mobile-skills-button" id="open-mcp-mobile" type="button" aria-controls="mcp-layer" aria-expanded="false">MCP</button>
+            <button class="inspector-toggle-button" id="inspector-toggle" type="button" aria-controls="runtime-inspector" aria-expanded="false" title="显示或隐藏运行详情">
+              <span data-icon="panel-right" aria-hidden="true"></span>
+              <span>运行详情</span>
+            </button>
+            <button class="model-settings-button" id="model-settings" type="button" aria-haspopup="dialog" title="打开模型配置">模型配置</button>
+          </div>
+        </header>
+
+        <div class="conversation-scroll" id="conversation-scroll">
+          <div class="empty-state" id="empty-state">
+            <div class="empty-glyph"><span data-icon="sparkles" aria-hidden="true"></span></div>
+            <h2>今天想处理什么？</h2>
+            <p>CodePilot 可以理解项目、组织计划，并在后续阶段执行受控的代码任务。</p>
+            <div class="suggestions">
+              <button type="button" data-task="找到项目中处理 token 过期的代码。">追踪认证逻辑</button>
+              <button type="button" data-task="解释当前项目的结构和测试流程。">解释项目</button>
+              <button type="button" data-task="你好">打个招呼</button>
+            </div>
+          </div>
+          <div class="timeline" id="timeline" aria-live="polite"></div>
+        </div>
+        <nav class="turn-navigation" id="turn-navigation" aria-label="对话轮次导航" hidden></nav>
+
+        <form class="composer" id="task-form">
+          <section id="todo-list" class="todo-list-popover" aria-label="任务进度" aria-live="polite" hidden></section>
+          <label class="sr-only" for="task-input">描述一个任务</label>
+          <div id="attachment-list" class="attachment-list" aria-live="polite"></div>
+          <textarea id="task-input" rows="2" placeholder="描述你想让 Agent 在当前项目中处理的任务…"></textarea>
+          <div class="composer-footer">
+            <div class="composer-left-controls">
+              <input id="attachment-input" type="file" multiple accept="text/*,application/json,application/pdf,image/png,image/jpeg,image/webp,image/gif,.md,.ts,.js,.mjs,.py,.csv,.log" hidden />
+              <button id="attach-file" class="composer-icon-button" type="button" title="上传文本、图片或 PDF" aria-label="上传附件"><span data-icon="paperclip" aria-hidden="true"></span></button>
+              <div id="workspace-target-control" class="composer-menu-anchor" hidden>
+                <button id="workspace-target-trigger" class="composer-workspace-button" type="button" aria-haspopup="menu" aria-expanded="false"><span class="toolbar-icon" data-icon="git-branch" aria-hidden="true"></span><span id="workspace-target-label">主工作区</span><span class="toolbar-chevron" data-icon="chevron-down" aria-hidden="true"></span></button>
+                <div id="workspace-target-menu" class="composer-popover workspace-target-menu" role="menu" aria-label="新任务 Git 工作树" hidden></div>
+              </div>
+              <div class="composer-menu-anchor">
+                <button id="permission-mode-trigger" class="composer-mode-button" type="button" aria-haspopup="menu" aria-expanded="false"><span id="permission-mode-icon" class="toolbar-icon" data-icon="circle-help" aria-hidden="true"></span><span id="permission-mode-label">请求批准</span><span class="toolbar-chevron" data-icon="chevron-down" aria-hidden="true"></span></button>
+                <div id="permission-mode-menu" class="composer-popover permission-mode-menu" role="menu" hidden>
+                  <button type="button" role="menuitemradio" data-permission-mode="ask"><span class="permission-option-icon" data-icon="circle-help" aria-hidden="true"></span><span class="permission-option-copy"><strong>请求批准</strong><span>编辑外部文件和联网前始终询问</span></span><span class="permission-selected" data-icon="check" aria-hidden="true"></span></button>
+                  <button type="button" role="menuitemradio" data-permission-mode="auto"><span class="permission-option-icon" data-icon="shield-alert" aria-hidden="true"></span><span class="permission-option-copy"><strong>替我批准</strong><span>仅对检测到的风险操作请求批准</span></span><span class="permission-selected" data-icon="check" aria-hidden="true"></span></button>
+                  <button type="button" role="menuitemradio" data-permission-mode="full"><span class="permission-option-icon" data-icon="shield-check" aria-hidden="true"></span><span class="permission-option-copy"><strong>完全访问工作区</strong><span>不再询问，但硬性安全规则仍生效</span></span><span class="permission-selected" data-icon="check" aria-hidden="true"></span></button>
+                </div>
+              </div>
+            </div>
+            <div class="composer-right-controls">
+              <div class="composer-menu-anchor">
+                <button id="quick-model-trigger" class="quick-model-button" type="button" aria-haspopup="menu" aria-expanded="false"><span id="quick-model-label">模型设置</span><span class="toolbar-chevron" data-icon="chevron-down" aria-hidden="true"></span></button>
+                <div id="quick-model-menu" class="composer-popover quick-model-menu" role="menu" hidden>
+                  <div class="quick-setting-row"><span>模型</span><div class="quick-select"><button id="quick-model-select" class="quick-select-trigger" type="button" aria-haspopup="listbox" aria-expanded="false"></button><div id="quick-model-options" class="quick-select-options" role="listbox" hidden></div></div></div>
+                  <div id="quick-reasoning-row" class="quick-setting-row"><span>推理强度</span><div class="quick-select"><button id="quick-reasoning-select" class="quick-select-trigger" type="button" aria-haspopup="listbox" aria-expanded="false"></button><div id="quick-reasoning-options" class="quick-select-options" role="listbox" hidden></div></div></div>
+                  <div id="quick-capability-summary" class="model-capability-summary" role="status"></div>
+                  <button id="open-advanced-model-settings" class="popover-link-button" type="button"><span>更多模型与 Provider</span><span data-icon="chevron-right" aria-hidden="true"></span></button>
+                  <button id="reset-model-config" class="popover-reset-button" type="button"><span>重置为默认设置</span><span data-icon="rotate-ccw" aria-hidden="true"></span></button>
+                </div>
+              </div>
+              <button id="send-task" class="send-button" type="submit" aria-label="执行任务" title="执行任务"><span data-icon="arrow-up" aria-hidden="true"></span></button>
+            </div>
+          </div>
+        </form>
+      </section>
+
+      <aside class="inspector" id="runtime-inspector" aria-label="运行时检查器">
+        <header class="inspector-head">
+          <div><span id="inspector-title">运行详情</span><small id="inspector-subtitle">工具、事件与上下文</small></div>
+          <button class="inspector-close-button" id="inspector-close" type="button" aria-label="关闭运行详情" title="关闭运行详情">
+            <span data-icon="close" aria-hidden="true"></span>
+          </button>
+        </header>
+        <section class="inspector-section tool-section" data-runtime-inspector-section>
+          <div class="section-title"><span>工具活动</span><span id="tool-count" class="muted">0 次调用</span></div>
+          <div id="tool-activity" class="tool-activity"><p class="placeholder">工具事件将在这里显示。</p></div>
+        </section>
+
+        <section class="inspector-section transcript-section" data-runtime-inspector-section>
+          <div class="section-title"><span>会话记录</span><span class="file-tag">.jsonl</span></div>
+          <p id="transcript-summary" class="transcript-copy">执行任务后会创建本地追加式事件日志。</p>
+          <button id="open-transcript" class="subtle-button" type="button" disabled>查看事件数</button>
+        </section>
+        <section class="inspector-section usage-section" aria-labelledby="usage-title" data-runtime-inspector-section>
+          <div class="section-title"><span id="usage-title">上下文与用量</span><span id="usage-source" class="usage-source">等待 API usage</span></div>
+          <div id="context-usage" class="context-usage" title="会在模型请求后更新" data-tone="neutral">
+            <div class="context-usage-copy"><span class="context-usage-label">当前上下文</span><span id="context-usage-value">等待模型请求</span></div>
+            <span class="context-meter" aria-hidden="true"><span id="context-meter-fill"></span></span>
+          </div>
+          <div class="usage-total"><span>累计 tokens</span><strong id="usage-total">--</strong></div>
+          <dl class="usage-breakdown">
+            <div><dt>输入</dt><dd id="usage-input">--</dd></div>
+            <div><dt>输出</dt><dd id="usage-output">--</dd></div>
+            <div><dt>缓存读取</dt><dd id="usage-cache-read">--</dd></div>
+            <div><dt>缓存写入</dt><dd id="usage-cache-write">--</dd></div>
+          </dl>
+          <p class="usage-note">累计用量来自 API usage；当前上下文是下一次模型请求的有效输入估算。</p>
+        </section>
+        <section class="change-review" id="change-review" hidden></section>
+      </aside>
+      <button class="inspector-scrim" id="inspector-scrim" type="button" aria-label="关闭运行详情" hidden></button>
+    </main>
+    <div id="file-drop-overlay" class="file-drop-overlay" hidden aria-hidden="true">
+      <div class="file-drop-card"><span data-icon="upload" aria-hidden="true"></span><strong>松开以添加附件</strong><span>支持文本、图片和 PDF，最多 4 个文件</span></div>
+    </div>
+    <div id="runtime-notice" class="runtime-notice" role="status" hidden></div>
+    <dialog id="confirmation-dialog" class="confirmation-dialog" aria-labelledby="confirmation-title" aria-describedby="confirmation-message confirmation-detail">
+      <section class="confirmation-panel">
+        <div class="confirmation-content">
+          <div class="confirmation-topline">
+            <span class="confirmation-icon" data-icon="trash" aria-hidden="true"></span>
+          </div>
+          <button id="confirmation-close" class="close-button" type="button" aria-label="关闭确认弹窗"><span data-icon="close" aria-hidden="true"></span></button>
+          <h2 id="confirmation-title">确认操作</h2>
+          <p id="confirmation-message"></p>
+          <div class="confirmation-target">
+            <span class="confirmation-target-icon" data-icon="message-square" aria-hidden="true"></span>
+            <div>
+              <p id="confirmation-detail" class="confirmation-detail"></p>
+              <p id="confirmation-detail-meta" class="confirmation-detail-meta"></p>
+            </div>
+          </div>
+        </div>
+        <footer class="confirmation-actions">
+          <span class="confirmation-shortcut"><kbd>ESC</kbd> 取消</span>
+          <div class="confirmation-button-group">
+            <button id="confirmation-cancel" class="deny-button" type="button">取消</button>
+            <button id="confirmation-confirm" class="destructive-button" type="button">确认</button>
+          </div>
+        </footer>
+      </section>
+    </dialog>
+    <dialog id="project-create-dialog" class="confirmation-dialog" aria-labelledby="project-create-title" aria-describedby="project-create-description">
+      <form id="project-create-form" class="project-create-panel" method="dialog">
+        <header class="project-create-head">
+          <span class="project-create-icon" data-icon="folder" aria-hidden="true"></span>
+          <div>
+            <h2 id="project-create-title">创建项目</h2>
+            <p id="project-create-description">为项目命名并选择 Agent 可处理的本地工作区。</p>
+          </div>
+          <button id="project-create-close" class="close-button" type="button" aria-label="关闭创建项目弹窗"><span data-icon="close" aria-hidden="true"></span></button>
+        </header>
+        <div class="project-create-body">
+          <label class="project-create-field" for="project-create-name"><span>项目名称</span><input id="project-create-name" name="projectName" maxlength="80" autocomplete="off" placeholder="例如：CodePilot" /></label>
+          <div class="project-workspace-field">
+            <span>源文件夹</span>
+            <button id="project-workspace-picker" class="project-workspace-picker" type="button"><span data-icon="folder" aria-hidden="true"></span><span><strong>选择工作区</strong><small id="project-workspace-path">选择 Agent 可读取和编辑的文件夹</small></span></button>
+          </div>
+          <p id="project-create-error" class="project-create-error" role="alert" hidden></p>
+        </div>
+        <footer class="project-create-actions">
+          <button id="project-create-cancel" class="subtle-button" type="button">取消</button>
+          <button id="project-create-submit" class="allow-button" type="submit" disabled>创建项目</button>
+        </footer>
+      </form>
+    </dialog>
+    <dialog id="project-edit-dialog" class="confirmation-dialog" aria-labelledby="project-edit-title" aria-describedby="project-edit-description">
+      <form id="project-edit-form" class="project-create-panel project-edit-panel" method="dialog">
+        <header class="project-create-head">
+          <span class="project-create-icon" data-icon="settings" aria-hidden="true"></span>
+          <div><h2 id="project-edit-title">编辑项目</h2><p id="project-edit-description">修改侧栏中的项目名称，不更改工作区或本地文件。</p></div>
+          <button id="project-edit-close" class="close-button" type="button" aria-label="关闭编辑项目弹窗"><span data-icon="close" aria-hidden="true"></span></button>
+        </header>
+        <div class="project-create-body">
+          <label class="project-create-field" for="project-edit-name"><span>项目名称</span><input id="project-edit-name" maxlength="80" autocomplete="off" required /></label>
+          <p id="project-edit-error" class="project-create-error" role="alert" hidden></p>
+        </div>
+        <footer class="project-create-actions"><button id="project-edit-cancel" class="subtle-button" type="button">取消</button><button id="project-edit-submit" class="allow-button" type="submit">保存名称</button></footer>
+      </form>
+    </dialog>
+    <dialog id="worktree-dialog" class="confirmation-dialog" aria-labelledby="worktree-title" aria-describedby="worktree-description">
+      <form id="worktree-form" class="project-create-panel worktree-panel" method="dialog">
+        <header class="project-create-head">
+          <span class="project-create-icon" data-icon="terminal" aria-hidden="true"></span>
+          <div><h2 id="worktree-title">项目工作树</h2><p id="worktree-description">每个 Task 固定绑定一个工作区；永久工作树适合隔离并行开发。</p></div>
+          <button id="worktree-close" class="close-button" type="button" aria-label="关闭工作树弹窗"><span data-icon="close" aria-hidden="true"></span></button>
+        </header>
+        <div class="project-create-body worktree-body">
+          <div id="worktree-status" class="worktree-status" role="status"></div>
+          <div id="worktree-list" class="worktree-list"></div>
+          <label class="project-create-field" for="worktree-slug"><span>新工作树名称</span><input id="worktree-slug" maxlength="48" autocomplete="off" spellcheck="false" placeholder="例如：feature-review" /><small>将创建分支 <code>codepilot/&lt;名称&gt;</code>，位置由 Electron 选择。</small></label>
+          <p id="worktree-error" class="project-create-error" role="alert" hidden></p>
+        </div>
+        <footer class="project-create-actions"><button id="worktree-cancel" class="subtle-button" type="button">完成</button><button id="worktree-create" class="allow-button" type="submit">创建永久工作树</button></footer>
+      </form>
+    </dialog>
+    <dialog id="github-dialog" class="confirmation-dialog" aria-labelledby="github-title" aria-describedby="github-description">
+      <section class="project-create-panel github-panel">
+        <header class="project-create-head">
+          <span class="project-create-icon" data-icon="git-branch" aria-hidden="true"></span>
+          <div><h2 id="github-title">连接 GitHub</h2><p id="github-description">使用本机 GitHub CLI 连接当前 Project 工作区；凭据由 GitHub CLI 与系统钥匙串持有。</p></div>
+          <button id="github-close" class="close-button" type="button" aria-label="关闭 GitHub 连接弹窗"><span data-icon="close" aria-hidden="true"></span></button>
+        </header>
+        <div class="project-create-body github-body">
+          <div id="github-status" class="github-status" role="status">正在读取本机 GitHub 状态…</div>
+          <form id="github-connect-form" class="github-connect-form" hidden>
+            <label class="project-create-field" for="github-repository-input"><span>GitHub Repository</span><input id="github-repository-input" maxlength="200" autocomplete="off" spellcheck="false" placeholder="owner/repository 或 GitHub HTTPS 地址" required /></label>
+            <button id="github-connect" class="allow-button" type="submit">连接仓库</button>
+          </form>
+          <div id="github-repository" class="github-repository" hidden>
+            <div><span>Repository</span><strong id="github-repository-name"></strong></div>
+            <div><span>当前分支</span><strong id="github-branch"></strong></div>
+            <div><span>Pull Request</span><strong id="github-pr-state"></strong></div>
+          </div>
+          <section id="github-checks-section" class="github-checks-section" hidden>
+            <div class="github-section-head"><strong>Checks</strong><span id="github-checks-summary"></span></div>
+            <div id="github-checks" class="github-checks"></div>
+          </section>
+          <form id="github-pr-form" class="github-pr-form">
+            <div class="github-section-head"><strong>创建 Pull Request</strong><span>远端写操作会再次确认</span></div>
+            <label class="project-create-field" for="github-pr-title"><span>标题</span><input id="github-pr-title" maxlength="200" autocomplete="off" required /></label>
+            <label class="project-create-field" for="github-pr-base"><span>Base branch</span><input id="github-pr-base" maxlength="80" autocomplete="off" spellcheck="false" required /></label>
+            <label class="project-create-field" for="github-pr-body"><span>说明</span><textarea id="github-pr-body" maxlength="8000" rows="4" placeholder="说明本次变更与验证结果"></textarea></label>
+          </form>
+          <p id="github-error" class="project-create-error" role="alert" hidden></p>
+        </div>
+        <footer class="project-create-actions github-actions">
+          <button id="github-done" class="subtle-button" type="button">完成</button>
+          <div><button id="github-push" class="subtle-button" type="button" disabled>Push branch</button><button id="github-create-pr" class="allow-button" type="submit" form="github-pr-form" disabled>创建 PR</button></div>
+        </footer>
+      </section>
+    </dialog>
+    <dialog id="mcp-token-dialog" class="confirmation-dialog" aria-labelledby="mcp-token-title">
+      <form id="mcp-token-form" class="confirmation-panel">
+        <header class="confirmation-head">
+          <span class="confirmation-icon mcp-token-icon" data-icon="tool" aria-hidden="true"></span>
+          <div><h2 id="mcp-token-title">连接 GitHub</h2><p>使用 Personal Access Token</p></div>
+          <button id="mcp-token-close" class="close-button" type="button" aria-label="关闭"><span data-icon="close" aria-hidden="true"></span></button>
+        </header>
+        <div class="confirmation-body">
+          <p>Token 仅交给本地 Server，并用当前 Windows 用户的 DPAPI 加密保存；不会写入项目配置、会话 JSONL 或浏览器存储。</p>
+          <label class="mcp-token-field">Personal Access Token<input id="mcp-token-input" type="password" autocomplete="off" spellcheck="false" required minlength="8" maxlength="4096" placeholder="github_pat_…" /></label>
+          <p id="mcp-token-error" class="mcp-token-error" role="alert" hidden></p>
+        </div>
+        <footer class="confirmation-actions">
+          <button id="mcp-token-cancel" class="subtle-button" type="button">取消</button>
+          <button id="mcp-token-submit" class="destructive-button mcp-connect-submit" type="submit">安全连接</button>
+        </footer>
+      </form>
+    </dialog>
+    <div id="permission-layer" class="permission-layer" hidden></div>
+    <div id="event-log-layer" class="permission-layer" hidden></div>
+    <div id="skills-layer" class="skills-layer" hidden>
+      <section class="skills-page" aria-labelledby="skills-title">
+        <header class="skills-page-header">
+          <div><div class="permission-tool">PROJECT CAPABILITIES</div><h2 id="skills-title">技能</h2><p>为 CodePilot 添加针对特定任务的工作方法。</p></div>
+          <button id="close-skills" class="close-button" type="button" aria-label="关闭技能"><span data-icon="close" aria-hidden="true"></span></button>
+        </header>
+        <div class="skills-page-body">
+          <label class="skills-search"><span data-icon="search" aria-hidden="true"></span><span class="sr-only">搜索技能</span><input id="skills-search" type="search" autocomplete="off" placeholder="搜索技能名称、描述或来源" /></label>
+        <div class="skills-page-meta"><div><strong>项目技能</strong><small id="skills-catalog-status">元数据常驻，说明按需载入</small></div><span id="skills-result-count">0 项</span></div>
+          <div id="skills-grid" class="skills-grid" aria-live="polite"></div>
+        </div>
+      </section>
+      <div id="skill-detail-layer" class="skill-detail-layer" hidden>
+        <section id="skill-detail-panel" class="skill-detail-dialog" role="dialog" aria-modal="true" aria-labelledby="skill-detail-title"></section>
+      </div>
+    </div>
+    <div id="mcp-layer" class="skills-layer" hidden>
+      <section class="skills-page" aria-labelledby="mcp-title">
+        <header class="skills-page-header">
+          <div><div class="permission-tool">CODEPILOT EXTENSIONS</div><h2 id="mcp-title">MCP 能力</h2><p>内置能力开箱即用，公共 MCP 服务按需安装。</p></div>
+          <button id="close-mcp" class="close-button" type="button" aria-label="关闭 MCP"><span data-icon="close" aria-hidden="true"></span></button>
+        </header>
+        <div class="skills-page-body">
+          <label class="skills-search mcp-search"><span data-icon="search" aria-hidden="true"></span><span class="sr-only">搜索公共 MCP</span><input id="mcp-search" type="search" autocomplete="off" placeholder="搜索公共 MCP 服务" /></label>
+          <section class="mcp-section" aria-labelledby="mcp-native-title">
+            <div class="skills-page-meta"><div><strong id="mcp-native-title">CodePilot 内置</strong><small>原生 Tool Contract，不依赖外部进程或安装</small></div><span>始终可用</span></div>
+            <div id="mcp-native-grid" class="mcp-native-grid"></div>
+          </section>
+          <section class="mcp-section" aria-labelledby="mcp-installed-title">
+            <div class="skills-page-meta"><div><strong id="mcp-installed-title">已安装</strong><small id="mcp-catalog-status">正在核对 .codepilot/mcp.json</small></div><span id="mcp-result-count">0 项</span></div>
+            <div class="mcp-installed-summary"><span><strong id="mcp-configured-count">0</strong> 个服务</span><span><strong id="mcp-available-count">0</strong> 本轮可用</span><span><strong id="mcp-tool-count">0</strong> 个工具</span></div>
+            <div id="mcp-grid" class="mcp-grid" aria-live="polite"></div>
+          </section>
+          <section class="mcp-section mcp-featured-section" aria-labelledby="mcp-featured-title">
+            <div class="skills-page-meta"><div><strong id="mcp-featured-title">精选连接</strong><small>主流开发、协作与办公软件；明确区分官方、社区和认证接入状态</small></div><span id="mcp-featured-count">0 项</span></div>
+            <div id="mcp-featured-catalog" class="mcp-featured-catalog"></div>
+          </section>
+          <section class="mcp-section" aria-labelledby="mcp-marketplace-title">
+            <div class="skills-page-meta"><div><strong id="mcp-marketplace-title">Registry 全部</strong><small id="mcp-registry-status">来自官方 MCP Registry 的原始公共目录</small></div><button id="refresh-mcp-registry" class="mcp-refresh-button" type="button" aria-label="刷新公共 MCP"><span data-icon="refresh" aria-hidden="true"></span><span>刷新</span></button></div>
+            <div id="mcp-marketplace-grid" class="mcp-marketplace-grid" aria-live="polite"></div>
+          </section>
+          <aside class="mcp-snapshot-note"><span data-icon="circle-help" aria-hidden="true"></span><div><strong>安装不等于本轮生效</strong><p>安装会更新 <code>.codepilot/mcp.json</code>；外部服务在下一轮连接成功并进入冻结能力快照后，模型才能调用它的工具。</p></div></aside>
+        </div>
+      </section>
+    </div>
+    <div id="settings-layer" class="permission-layer" hidden>
+      <section class="workspace-settings-dialog" role="dialog" aria-modal="true" aria-labelledby="workspace-settings-title">
+        <header class="workspace-settings-head">
+          <div><span>CODEPILOT SETTINGS</span><h2 id="workspace-settings-title">设置</h2></div>
+          <button id="close-workspace-settings" class="close-button" type="button" aria-label="关闭设置"><span data-icon="close" aria-hidden="true"></span></button>
+        </header>
+        <div class="workspace-settings-layout">
+          <nav class="workspace-settings-nav" aria-label="设置分类">
+            <button type="button" data-settings-view="appearance" aria-selected="true"><span data-icon="settings" aria-hidden="true"></span><span>外观</span></button>
+            <button type="button" data-settings-view="activity" aria-selected="false"><span data-icon="history" aria-hidden="true"></span><span>活动</span></button>
+            <button type="button" data-settings-view="archives" aria-selected="false"><span data-icon="message-square" aria-hidden="true"></span><span>已归档</span></button>
+          </nav>
+          <div class="workspace-settings-content">
+            <section class="settings-view" data-settings-panel="appearance" aria-labelledby="appearance-title">
+              <div class="settings-view-head"><h3 id="appearance-title">外观</h3><p>选择更适合当前环境的工作台主题。</p></div>
+              <fieldset class="theme-options"><legend>主题</legend>
+                <label><input type="radio" name="codepilot-theme" value="light" /><span class="theme-preview is-light"><i></i><i></i><i></i></span><strong>白天</strong><small>明亮画布与云灰导航</small></label>
+                <label><input type="radio" name="codepilot-theme" value="dark" /><span class="theme-preview is-dark"><i></i><i></i><i></i></span><strong>黑夜</strong><small>低亮度阅读与深色表面</small></label>
+              </fieldset>
+            </section>
+            <section class="settings-view" data-settings-panel="activity" aria-labelledby="activity-title" hidden>
+              <div class="settings-view-head"><h3 id="activity-title">活动</h3><p>基于当前 Project 的真实 JSONL token usage 生成。</p></div>
+              <div id="activity-content" class="activity-content" aria-live="polite"><p class="settings-loading">正在读取活动…</p></div>
+            </section>
+            <section class="settings-view" data-settings-panel="archives" aria-labelledby="archives-title" hidden>
+              <div class="settings-view-head"><h3 id="archives-title">已归档的会话</h3><p>查看、恢复或彻底删除本地会话记录。</p></div>
+              <div id="archived-session-list" class="archived-session-list" aria-live="polite"></div>
+            </section>
+          </div>
+        </div>
+      </section>
+    </div>
+    <div id="runtime-settings-layer" class="permission-layer" hidden>
+      <form id="model-form" class="settings-dialog">
+        <header class="permission-head settings-head">
+          <span class="settings-head-icon" data-icon="settings" aria-hidden="true"></span>
+          <div class="settings-head-copy"><div class="permission-tool">RUNTIME CONFIG</div><h2>模型配置</h2><p>选择下一轮任务使用的模型与运行预算</p></div>
+          <span class="settings-snapshot-badge">下一轮生效</span>
+          <button id="close-settings" class="close-button" type="button" aria-label="关闭模型配置"><span data-icon="close" aria-hidden="true"></span></button>
+        </header>
+        <div class="settings-body">
+          <aside class="settings-warning"><span data-icon="shield-check" aria-hidden="true"></span><p>Provider、Base URL 和模型保存在本地配置。Windows 下 API Key 使用当前用户账户加密保存，不进入 JSONL、浏览器存储或 Git 记录。</p></aside>
+          <section class="settings-group" aria-labelledby="model-identity-title">
+            <div class="settings-group-head"><div><strong id="model-identity-title">模型与 Provider</strong><small>连接身份与模型能力保持同一 Provider 作用域</small></div></div>
+            <div class="settings-field-grid">
+              <label>Provider<span class="settings-select-control"><select id="model-provider"></select><span class="settings-select-icon" data-icon="chevron-down" aria-hidden="true"></span></span></label>
+              <label>Base URL<span class="settings-select-control"><select id="model-base-url"></select><span class="settings-select-icon" data-icon="chevron-down" aria-hidden="true"></span></span></label>
+              <label class="settings-field-wide">Model<div class="model-select-row"><span class="settings-select-control"><select id="model-name"></select><span class="settings-select-icon" data-icon="chevron-down" aria-hidden="true"></span></span><button id="refresh-models" class="subtle-button" type="button" title="从官方接口刷新模型列表">刷新</button></div></label>
+              <label class="settings-field-wide">API Key<input id="model-api-key" type="password" autocomplete="off" placeholder="使用该 Provider 已保存的凭据" /></label>
+            </div>
+            <label class="checkbox-row"><input id="clear-api-key" type="checkbox" /> 清除该 Provider 已保存的 API Key</label>
+          </section>
+          <section class="settings-section" aria-labelledby="budget-settings-title">
+            <div class="settings-section-head">
+              <div><strong id="budget-settings-title">运行预算</strong><small>新设置只影响下一次任务</small></div>
+              <span id="budget-effective-output" class="settings-section-status"></span>
+            </div>
+            <div class="budget-settings-grid">
+              <label>最大模型回合<input id="budget-max-turns" type="number" min="4" max="100" step="1" /></label>
+              <label>最大模型重试<input id="budget-max-retries" type="number" min="0" max="8" step="1" /></label>
+              <label>任务时限（分钟）<input id="budget-deadline-minutes" type="number" min="1" max="60" step="1" /></label>
+              <label>单次最大输出 tokens<input id="budget-max-output-tokens" type="number" min="256" max="65536" step="256" /></label>
+              <label>上下文压缩输出 tokens<input id="budget-compaction-output-tokens" type="number" min="256" max="8192" step="128" /></label>
+            </div>
+            <p class="settings-help">输出上限会再受当前模型能力限制；运行开始时冻结整组预算，修改不会改变正在执行的任务。</p>
+          </section>
+        </div>
+        <footer class="permission-actions settings-actions"><span class="settings-footer-note"><span data-icon="lock" aria-hidden="true"></span>配置由本地 Server 持有</span><div><button id="cancel-settings" class="deny-button" type="button">取消</button><button class="allow-button" type="submit">保存配置</button></div></footer>
+      </form>
+    </div>
+    <script type="module" src="/app.js"></script>
+  </body>
+</html>

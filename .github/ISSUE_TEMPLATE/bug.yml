@@ -1,0 +1,27 @@
+﻿name: Bug report
+description: Report a reproducible product or runtime failure
+title: "[Bug] "
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: Do not include provider keys, transcripts, private source, or personal paths.
+  - type: input
+    id: version
+    attributes:
+      label: Version and environment
+      placeholder: v0.1.0, Windows version, Node version
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Reproduction
+      description: Include project/task/run state, actions, and expected vs actual result.
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Redacted evidence
+      description: Relevant event types, test output, or screenshots with secrets and private code removed.

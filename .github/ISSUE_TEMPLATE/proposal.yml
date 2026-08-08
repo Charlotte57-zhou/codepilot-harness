@@ -1,0 +1,24 @@
+﻿name: Product proposal
+description: Propose a bounded workflow or architecture improvement
+title: "[Proposal] "
+labels: [proposal]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: User problem and evidence
+    validations:
+      required: true
+  - type: textarea
+    id: ownership
+    attributes:
+      label: State owner and end-to-end flow
+      description: Identify the owning module, contracts, failure/recovery path, and UI impact.
+    validations:
+      required: true
+  - type: textarea
+    id: tradeoffs
+    attributes:
+      label: Options and tradeoffs
+    validations:
+      required: true

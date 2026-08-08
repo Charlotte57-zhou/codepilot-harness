@@ -1,0 +1,78 @@
+{
+  "name": "codepilot-harness",
+  "version": "0.1.0",
+  "description": "A local, observable coding-agent harness for interview demonstration.",
+  "license": "Apache-2.0",
+  "private": true,
+  "engines": {
+    "node": ">=22.0.0"
+  },
+  "type": "module",
+  "main": "desktop/main.mjs",
+  "scripts": {
+    "dev": "node server.mjs",
+    "desktop": "electron .",
+    "desktop:dev": "electron . --devtools",
+    "check:context": "node scripts/context-check.mjs",
+    "eval": "node scripts/harness-eval.mjs",
+    "eval:controlled": "node evaluation/run-controlled.mjs",
+    "eval:report": "node evaluation/rebuild-report.mjs",
+    "ui:capture": "node scripts/capture-desktop-visuals.mjs",
+    "check:privacy": "node scripts/privacy-check.mjs",
+    "export:public": "node scripts/export-public-release.mjs",
+    "verify:public": "node scripts/verify-public-release.mjs",
+    "test": "node --test tests/**/*.test.mjs",
+    "package:win": "node scripts/package-windows.mjs"
+  },
+  "build": {
+    "appId": "com.codepilot.desktop",
+    "productName": "CodePilot",
+    "artifactName": "CodePilot-${version}-${arch}-portable.${ext}",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "desktop/**/*",
+      "public/**/*",
+      "src/**/*",
+      "server.mjs",
+      "package.json"
+    ],
+    "extraResources": [
+      {
+        "from": "demo-repo",
+        "to": "demo-repo",
+        "filter": [
+          "AGENT.md",
+          "README.md",
+          ".codepilot/skills/**/*",
+          "games/**/*",
+          "src/**/*"
+        ]
+      }
+    ],
+    "asar": true,
+    "asarUnpack": [
+      "server.mjs",
+      "src/**/*",
+      "public/**/*",
+      "node_modules/**/*"
+    ],
+    "win": {
+      "icon": "desktop/assets/codepilot.ico",
+      "target": [
+        "portable"
+      ]
+    }
+  },
+  "dependencies": {
+    "@anthropic-ai/claude-agent-sdk": "^0.3.222",
+    "@modelcontextprotocol/sdk": "^1.30.0",
+    "playwright-core": "^1.62.1",
+    "zod": "^4.4.3"
+  },
+  "devDependencies": {
+    "electron": "^43.3.0",
+    "electron-builder": "^26.15.3"
+  }
+}
