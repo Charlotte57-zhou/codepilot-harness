@@ -20,7 +20,6 @@ test("Electron owns bounded Project GitHub intents and checks active run before 
   assert.match(preload, /body: String\(value\.body[^]*\.slice\(0, 8001\)/);
   assert.doesNotMatch(preload, /workspacePath|stdout|stderr|token|login/);
 });
-
 test("Electron creates an isolated Git worktree before the renderer starts a new Task", async () => {
   const [main, preload, app] = await Promise.all([read("../desktop/main.mjs"), read("../desktop/preload.cjs"), read("../public/app.js")]);
   assert.match(main, /codepilot:projects:worktrees:create-isolated[^]*await assertProjectMutationAvailable\(\)[^]*gitWorkspaceService\.createPermanent[^]*projectRegistry\.addTarget/s);
@@ -42,4 +41,3 @@ test("Project menu opens one GitHub workflow and confirms push and PR mutations"
   assert.match(css, /\.github-repository\s*\{[^}]*grid-template-columns:\s*repeat\(3, minmax\(0, 1fr\)\)/s);
   assert.match(css, /\.github-check\[data-bucket="fail"\]/);
 });
-

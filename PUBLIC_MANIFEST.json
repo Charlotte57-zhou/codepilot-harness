@@ -865,8 +865,8 @@
     },
     {
       "path": "tests/github-cli-bridge-ui.test.mjs",
-      "bytes": 3290,
-      "sha256": "4a5563c02ac660cc369e7aeff54b883a8a6b2de138cf9d14f32ecf0030582359"
+      "bytes": 3286,
+      "sha256": "32ca3728379182f70f33128a195cae924bf7208d27c94116e7a7986f040c8ef8"
     },
     {
       "path": "tests/github-cli-bridge.test.mjs",
