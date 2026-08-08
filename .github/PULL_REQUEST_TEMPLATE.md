@@ -1,20 +1,20 @@
-﻿## Problem and decision
+## 问题与决策
 
-<!-- What user failure is addressed, what evidence supports it, and why this option? -->
+<!-- 解决了什么用户问题？证据是什么？为什么选择这个方案？ -->
 
-## State ownership and data flow
+## 状态所有权与数据流
 
-<!-- Trace UI -> server -> runtime/tool/model -> JSONL -> projector -> UI. -->
+<!-- 请沿 UI -> Server -> Runtime / Tool / Model -> JSONL -> Projector -> UI 说明。 -->
 
-## Verification
+## 验证
 
-- [ ] Focused tests
+- [ ] 聚焦测试
 - [ ] `npm test`
 - [ ] `npm run check:context`
 - [ ] `npm run check:privacy`
-- [ ] Actual Electron window inspected for user-visible changes
-- [ ] No key, transcript, private path, runtime state, or unrelated change included
+- [ ] 用户可见变更已检查真实 Electron 窗口
+- [ ] 未包含 Key、Transcript、个人路径、Runtime State 或无关改动
 
-## Breaking change / risk / rollback
+## Breaking Change / 风险 / 回滚
 
-<!-- v0.1 does not add compatibility paths. State the current contract and rollback. -->
+<!-- v0.1 不增加兼容路径。请说明当前 Contract、风险和回滚方式。 -->

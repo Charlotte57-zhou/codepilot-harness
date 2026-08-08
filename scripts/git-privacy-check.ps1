@@ -25,6 +25,7 @@ $forbiddenPaths = @(
 $blocked = [System.Collections.Generic.List[string]]::new()
 foreach ($path in $paths) {
   if ($path -match '(^|/)\.env\.example$') { continue }
+  if ($path -eq 'demo-repo/.codepilot/skills/harness-audit/SKILL.md') { continue }
   foreach ($pattern in $forbiddenPaths) {
     if ($path -match $pattern) {
       $blocked.Add($path)
@@ -36,7 +37,7 @@ foreach ($path in $paths) {
 $contentRules = @(
   @{ Name = 'private-key'; Pattern = '-----BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY-----' },
   @{ Name = 'long-provider-token'; Pattern = '(?i)(?:sk|ak)-[A-Za-z0-9_-]{20,}' },
-  @{ Name = 'assigned-secret'; Pattern = '(?im)^\s*(?:MODEL_API_KEY|ANTHROPIC_API_KEY|ANTHROPIC_AUTH_TOKEN|DEEPSEEK_API_KEY|OPENAI_API_KEY)\s*=\s*(?!replace-me|example|dummy|fake|test|\[REDACTED\])\S{8,}\s*$' }
+  @{ Name = 'assigned-secret'; Pattern = '(?im)^\s*(?:MODEL_API_KEY|ANTHROPIC_API_KEY|ANTHROPIC_AUTH_TOKEN|DEEPSEEK_API_KEY|OPENAI_API_KEY)\s*=\s*(?!replace-me|example|dummy|fake|test|your-|\[REDACTED\])\S{8,}\s*$' }
 )
 
 $contentHits = [System.Collections.Generic.List[string]]::new()

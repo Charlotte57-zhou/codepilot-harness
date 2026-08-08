@@ -1,19 +1,19 @@
-# Claude Agent SDK and coding-agent alignment
+# Claude Agent SDK 与成熟 Coding Agent 对齐情况
 
-## Classification
+## 对齐判断
 
-| Capability | Assessment | Evidence/boundary |
+| 能力 | 判断 | 证据与边界 |
 | --- | --- | --- |
-| single SDK agent loop | aligned | `ClaudeAgentRuntime` delegates iteration to SDK query |
-| streaming tool/model events | aligned | normalized run-scoped JSONL and SSE projections |
-| permission hook | aligned | SDK `canUseTool` plus CodePilot policy/events |
-| workspace filesystem guard | partially aligned | canonical path/symlink checks; no OS sandbox |
-| durable sessions/resume | partially aligned | local JSONL recovery and new-run resume; not ecosystem parity |
-| Skills | partially aligned | current directory-format catalog and frozen capability snapshot |
-| MCP | partially aligned | curated/local connections and tool visibility; narrower lifecycle coverage |
-| subagents | not aligned | no product claim in v0.1 |
-| hooks/ecosystem breadth | not aligned | outside v0.1 scope |
-| Git worktree/diff/undo | aligned with CodePilot product scope | local delivery workflow, not an SDK parity claim |
-| cross-platform isolation | not aligned | Windows-first, trusted local-user boundary |
+| 单一 SDK Agent Loop | 已对齐 | `ClaudeAgentRuntime` 将迭代交给 SDK Query |
+| Streaming Tool / Model Event | 已对齐 | Run 级标准化 JSONL 与 SSE Projection |
+| Permission Hook | 已对齐 | SDK `canUseTool` + CodePilot Policy / Event |
+| Workspace 文件系统守卫 | 部分对齐 | Canonical Path / Symlink 校验；没有 OS Sandbox |
+| 持久 Session / Resume | 部分对齐 | 本地 JSONL Recovery 与新 Run Resume；未达到生态级能力 |
+| Skills | 部分对齐 | 当前目录格式 Catalog 与冻结能力快照 |
+| MCP | 部分对齐 | Curated / Local Connection 与 Tool Visibility；生命周期覆盖较窄 |
+| Subagent | 未对齐 | v0.1 不宣称支持 |
+| Hook / 生态广度 | 未对齐 | 不在 v0.1 范围内 |
+| Git Worktree / Diff / Undo | 与 CodePilot 产品范围已对齐 | 本地交付工作流，不作为 SDK 能力等价声明 |
+| 跨平台隔离 | 未对齐 | Windows 优先、本地受信用户边界 |
 
-CodePilot does not reproduce the internals or brand interface of Claude Code or Codex. Public behaviors and documentation inform product boundaries; CodePilot's control plane is independently implemented around documented SDK contracts.
+CodePilot 不复刻 Claude Code 或 Codex 的内部实现与品牌界面。公开行为和文档用于界定产品问题；CodePilot 的控制平面基于公开 SDK Contract 独立实现。

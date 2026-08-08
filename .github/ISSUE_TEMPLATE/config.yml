@@ -1,5 +1,5 @@
-﻿blank_issues_enabled: false
+blank_issues_enabled: false
 contact_links:
-  - name: Private security report
+  - name: 私密安全报告
     url: ../../security/advisories/new
-    about: Report unpatched vulnerabilities privately.
+    about: 请通过私密渠道报告尚未修复的安全问题。

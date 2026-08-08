@@ -10,23 +10,23 @@
     },
     {
       "path": ".github/ISSUE_TEMPLATE/bug.yml",
-      "bytes": 820,
-      "sha256": "c8bfb2099ff9540abc469fd70105fdadabfc85207d830b51c3645fe15aa26424"
+      "bytes": 817,
+      "sha256": "c0c1144585fdd0364051c1984d7a916c96c6fc34fbfe4932c2f30e0730952f78"
     },
     {
       "path": ".github/ISSUE_TEMPLATE/config.yml",
-      "bytes": 175,
-      "sha256": "d6ee067b28b3a49a52d63149abb39a10d46fdce160ecacfca0f24d81f4069bbb"
+      "bytes": 180,
+      "sha256": "d64e4eb0b7a0f1c45c256eb8ef02b3565b4bfa13f7065471dc10eba2f88b3fbe"
     },
     {
       "path": ".github/ISSUE_TEMPLATE/proposal.yml",
-      "bytes": 627,
-      "sha256": "855c20978213fa7779e1c4a0db623c306e0ce6744f73f9ff74e324bddd0821db"
+      "bytes": 598,
+      "sha256": "f8ff5c7865ae9ae4e5a5374ef5c5023aa57a55227413c26c39c72a957b4c51aa"
     },
     {
       "path": ".github/PULL_REQUEST_TEMPLATE.md",
-      "bytes": 623,
-      "sha256": "1d7c3ea0bf8637aafcd54c6415717da5999282ca1a702daa3c521b79cb954f47"
+      "bytes": 607,
+      "sha256": "5294601efa50b6b1c92eb67ac4868db5d6f6c6ea39b2fffc523efe9af413fbe5"
     },
     {
       "path": ".github/workflows/ci.yml",
@@ -40,23 +40,23 @@
     },
     {
       "path": "CHANGELOG.md",
-      "bytes": 877,
-      "sha256": "ed9c7f55e6657ee64d40ede9bfd7f5edd532afc6704851cfdb51ff94b785bb27"
+      "bytes": 911,
+      "sha256": "3deeacea98fb5643aceab7a1f0a1293c8ce1146a4b019a30ab532436bc7f2841"
     },
     {
       "path": "CODE_OF_CONDUCT.md",
-      "bytes": 972,
-      "sha256": "0f0a369f1a76917f8db47de26e7fcc830e71a1b352c750583e91eeee1345fe1b"
+      "bytes": 1344,
+      "sha256": "de543d2e2c45be60616329192687d8cd9112d93c26937ce824561b519d11a7b6"
     },
     {
       "path": "CONTRIBUTING.md",
-      "bytes": 1726,
-      "sha256": "c7a1581d2a2bce4cc53b2199361952d304cc7620c68a822b6bd3b76332b95c4b"
+      "bytes": 1857,
+      "sha256": "6554596f9a6d2ee845a4ca34be8d487021519267d4e096bb4ea2f944c1eafc62"
     },
     {
       "path": "DESIGN.md",
-      "bytes": 2572,
-      "sha256": "28d1c5c2878145551bc555df80bb171c6e9c280c3af4065dbba5bd1c437017ff"
+      "bytes": 2196,
+      "sha256": "52e79191b06386c6e2ee5db5463828e3ea329e50c709904da2772a507354dc65"
     },
     {
       "path": "LICENSE",
@@ -65,33 +65,33 @@
     },
     {
       "path": "PRODUCT.md",
-      "bytes": 2447,
-      "sha256": "f776ec8852dea060b5f16109979e74a2bc827766bfb3d9d78c36ea53b7e77d8e"
+      "bytes": 2320,
+      "sha256": "012ecf21d8aea0a1379acaf3fba02eb42b7330ac5198c83f33aec9d1874dfb64"
     },
     {
       "path": "README.md",
-      "bytes": 4349,
-      "sha256": "7728055ff27650ccc3da7d83b5f2db20ada0418ee80b8c5c021e330ed4f2e7ad"
+      "bytes": 5226,
+      "sha256": "916f5f33f70150274d97f4526b291335c389071292fd6e3cdce7bd388148a55e"
     },
     {
       "path": "ROADMAP.md",
-      "bytes": 693,
-      "sha256": "c16438acdebb98fb9be766d01400343cb9d4877d7e04f8578c78489649c5060d"
+      "bytes": 1088,
+      "sha256": "06147bfae4696f3c95b171df86137b270592dbac4d1f11851dd812f474e160f6"
     },
     {
       "path": "SECURITY.md",
-      "bytes": 1823,
-      "sha256": "2431dec245288698a25caaddb004a35e1936628335c9523e0bded79fd50c4c68"
+      "bytes": 1385,
+      "sha256": "14b2ab5799c7d3fb1ca20c2dd7a2f6a1bcbc0febe4ad8fb8b20b2978fd86c9a2"
     },
     {
       "path": "THIRD_PARTY_NOTICES.md",
-      "bytes": 997,
-      "sha256": "a66e6acb2943fa25de6dd6e3eac2bf6b88d76461e7b1f1ab11b9d16f94cf5d77"
+      "bytes": 861,
+      "sha256": "eea0c14d0ba7c1e82e336c415beb1e6e9bb59c08469720fa1bf3b1a4ee1a10be"
     },
     {
       "path": "demo-repo/.codepilot/skills/harness-audit/SKILL.md",
-      "bytes": 698,
-      "sha256": "e04111b0229c17030c36bff5e3b9d0c295511e72483803f69f988d4ed5e0d51f"
+      "bytes": 668,
+      "sha256": "44f78ea97aa00c469b5eed4fb34a488c02b5aff8cbc0b79d08d9b0acc3e17a43"
     },
     {
       "path": "demo-repo/AGENT.md",
@@ -100,8 +100,8 @@
     },
     {
       "path": "demo-repo/README.md",
-      "bytes": 208,
-      "sha256": "a474d29ceefd1a548e0d73ae009ab5393841f9d6d94e80df0378d24595a617f9"
+      "bytes": 175,
+      "sha256": "3cca9c9ab096bc65749f1bc7b52206360a7680c307294b33993058e849430896"
     },
     {
       "path": "demo-repo/games/plane-war/index.html",
@@ -125,8 +125,8 @@
     },
     {
       "path": "desktop/assets/README.md",
-      "bytes": 495,
-      "sha256": "6ec5da4d8f8abea8d06459203c6c4e586410fa400c0beb93d645930d4fc4399a"
+      "bytes": 477,
+      "sha256": "191c296f4ca11d1ea0d134d8f6e18ffe1dc9c0cfa194fe1ce429901b72d152a0"
     },
     {
       "path": "desktop/assets/build_icon.py",
@@ -190,53 +190,73 @@
     },
     {
       "path": "docs/ARCHITECTURE.md",
-      "bytes": 3784,
-      "sha256": "7ad336a0b2a91f8a1b3f0cc4e9125d955bbac3aa9d50407e50b76eac5a9e511b"
+      "bytes": 3782,
+      "sha256": "08035af7f7d449db7c094dfafa3542c9ff8d256fe1a79804187427e53b710eaa"
     },
     {
       "path": "docs/CLAUDE_AGENT_SDK_ALIGNMENT.md",
-      "bytes": 1388,
-      "sha256": "c01e61268d8ef3da0f00e291acd4c39d60e8d91652005d329641bc7c680cb9cb"
+      "bytes": 1278,
+      "sha256": "30ba603dd8cf03294257d1d8c8902e043d21df7f381b04629810174cc1f13298"
     },
     {
       "path": "docs/CURRENT_STATE.md",
-      "bytes": 1404,
-      "sha256": "bc167a78bd961e740cc49e390de420f91821e8eed76bd24ff83be1cbeb264d33"
+      "bytes": 1452,
+      "sha256": "3fac363b8d45bc0773cb2c0c9f3864ea13fda5fd19acca7c208d4f0316bae891"
     },
     {
       "path": "docs/DEMO_SCRIPT.md",
-      "bytes": 2413,
-      "sha256": "3ac2cf3812548ce847ddad51e85af626da99195d7556633542104dd102cc3c79"
+      "bytes": 2348,
+      "sha256": "d5a4d778e4539a1bfdfb97fcead4b25ab134832a8ca7c4d74755353f498bd06e"
     },
     {
       "path": "docs/PROVIDER_COMPATIBILITY.md",
-      "bytes": 1357,
-      "sha256": "393634ed7a6406034e383e6d758af389b9fc09bf19e6b3554f651d33b260cfa9"
+      "bytes": 1233,
+      "sha256": "6c47585e87fc15fddd4cb6a662a90ac24a714a0697a964fc822e87f9d0c41f4f"
     },
     {
       "path": "docs/QUALITY_GATES.md",
-      "bytes": 2266,
-      "sha256": "16bf52d11472388d533bea4b825102dc0a2b095d9d79ae493810796cbaaa1c28"
+      "bytes": 2203,
+      "sha256": "663b8bf7058441908d4031c5a71481380834e662ae3888efaf125da3185f0563"
     },
     {
       "path": "docs/README.md",
-      "bytes": 545,
-      "sha256": "104f535923a24e3df0de0e722f1b1b2f2e593b6169b5682202e8ad705e173b25"
+      "bytes": 600,
+      "sha256": "ccb113a4bf295b5e3f8e42bc95f7706b87733c4e15ee307ad2207a3b2def9c7c"
+    },
+    {
+      "path": "docs/assets/screenshots/mcp.png",
+      "bytes": 145208,
+      "sha256": "9ac215705d19b296450f3dd0c6e609ea8a8a5b0ddda0dbe63d9b9ba3a1759fc0"
+    },
+    {
+      "path": "docs/assets/screenshots/model-settings.png",
+      "bytes": 179236,
+      "sha256": "010627886bf8b449da5ffba7d84bff3713a902e2b212ef89f5c64f10aaadae0b"
+    },
+    {
+      "path": "docs/assets/screenshots/responsive.png",
+      "bytes": 91312,
+      "sha256": "b63b2085b73d1b9c267a63f58b05954fb6d4463d2ee62a484c71e316d09749d8"
+    },
+    {
+      "path": "docs/assets/screenshots/workbench.png",
+      "bytes": 131119,
+      "sha256": "8bcc2e4e2e5fca781dd1e102cbdbf0d1abb40e0e844346966a0800ffea71db18"
     },
     {
       "path": "docs/bash-security-boundary.md",
-      "bytes": 1033,
-      "sha256": "2d65cc32cfe565f31f34e4e03b329e57f4bcf39b4ea178139bbea77c779f790a"
+      "bytes": 985,
+      "sha256": "5b59959c1eefe2c9464fd094740170830d309ba6c24651a768c33c25c7c35dee"
     },
     {
       "path": "evaluation/BAD_CASE_LEDGER.md",
-      "bytes": 1874,
-      "sha256": "3910f1fcc4b5c2fc43e9d4203eaa38b3179a8dd946595be31e97782ebf659915"
+      "bytes": 1649,
+      "sha256": "636645098e4312616cb5de4c38f58c95714f1b8fa325c177601db09884c36505"
     },
     {
       "path": "evaluation/README.md",
-      "bytes": 1509,
-      "sha256": "ad4f5ddffa6ac022329fcd26289169116b00f8a313ccaa6f5b170393c1d39224"
+      "bytes": 1359,
+      "sha256": "df1422927adcc0d83ab7a66d42d9c6944677c1b416aefa994a159a35bb309e14"
     },
     {
       "path": "evaluation/cases.mjs",
@@ -260,8 +280,8 @@
     },
     {
       "path": "evaluation/results/README.md",
-      "bytes": 1122,
-      "sha256": "b4e76dbeab45b25141295cd92a1849707814d809177db8c149fb5ab914a5b2e9"
+      "bytes": 1034,
+      "sha256": "f84492922f4391b9218049bd9cd22a130a33276aa6139510bf687ce3556d4d78"
     },
     {
       "path": "evaluation/run-controlled.mjs",
@@ -410,8 +430,8 @@
     },
     {
       "path": "scripts/git-privacy-check.ps1",
-      "bytes": 2490,
-      "sha256": "6ac0bf3fc37d3bc0b83baefa62037dfc305062a5693faca8574dc6e2cfa258e6"
+      "bytes": 2576,
+      "sha256": "3153e23455fe6ea251709407d8082f1b75f2681617dac0a074e0f3f88c1b7493"
     },
     {
       "path": "scripts/harness-eval.mjs",
@@ -430,8 +450,8 @@
     },
     {
       "path": "scripts/public-release-contract.mjs",
-      "bytes": 3519,
-      "sha256": "96d2b5a569a8dea866166e5c77237b91401c5c662fe9a95662c04181bc6e4d4c"
+      "bytes": 3691,
+      "sha256": "80cb3755cfc54d6d7120a96bb6e6dafb173b389f3aeab64274d49f01b6cec484"
     },
     {
       "path": "scripts/verify-public-release.mjs",
@@ -855,8 +875,8 @@
     },
     {
       "path": "tests/gemini-workbench-ui.test.mjs",
-      "bytes": 4687,
-      "sha256": "184924244cb5ed3645a663bef3ede20da4e990447c0fd41574954493224fb2c2"
+      "bytes": 4703,
+      "sha256": "7a72deaa07f2849457461c2e95ee2a324f31331418472fe78710d96ba5a9368e"
     },
     {
       "path": "tests/git-workspace-service.test.mjs",

@@ -1,27 +1,27 @@
-﻿name: Bug report
-description: Report a reproducible product or runtime failure
+name: 缺陷报告
+description: 报告可复现的产品或 Runtime 问题
 title: "[Bug] "
 labels: [bug]
 body:
   - type: markdown
     attributes:
-      value: Do not include provider keys, transcripts, private source, or personal paths.
+      value: 请勿提交 Provider Key、完整 Transcript、私有源码或个人路径。
   - type: input
     id: version
     attributes:
-      label: Version and environment
-      placeholder: v0.1.0, Windows version, Node version
+      label: 版本与环境
+      placeholder: v0.1.0、Windows 版本、Node.js 版本
     validations:
       required: true
   - type: textarea
     id: steps
     attributes:
-      label: Reproduction
-      description: Include project/task/run state, actions, and expected vs actual result.
+      label: 复现步骤
+      description: 请说明 Project / Task / Run 状态、操作步骤、预期结果和实际结果。
     validations:
       required: true
   - type: textarea
     id: evidence
     attributes:
-      label: Redacted evidence
-      description: Relevant event types, test output, or screenshots with secrets and private code removed.
+      label: 已脱敏证据
+      description: 可附相关 Event Type、测试输出或已移除 Secret 和私有代码的截图。

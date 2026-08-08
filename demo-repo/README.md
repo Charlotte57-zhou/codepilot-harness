@@ -1,5 +1,5 @@
-# Demo Repository
+# 演示仓库
 
-This small workspace exists for CodePilot tool-loop demonstrations.
+这是一个用于 CodePilot Tool Loop 演示的小型 Workspace。
 
-Authentication is enforced by the request middleware and delegated to the token verifier in `src/auth/session.ts`.
+请求中间件负责触发认证，并将 Token 校验委托给 `src/auth/session.ts`。

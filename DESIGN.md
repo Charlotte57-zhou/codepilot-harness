@@ -1,39 +1,39 @@
-# CodePilot design
+# CodePilot 设计原则
 
-## Design decision
+## 设计目标
 
-Use the Claude Agent SDK as the only Agent Loop and keep CodePilot responsible for the surrounding local product contract. This avoids a second hidden loop while making permission, state, recovery, and UI behavior independently inspectable.
+围绕 Claude Agent SDK 的单一 Agent Loop，CodePilot 通过高密度、克制的桌面工作台呈现任务上下文、运行行为、交付证据和恢复状态，同时避免用视觉效果掩盖执行失败。
 
-## Experience principles
+## 交互原则
 
-1. **Task before chat:** establish project, target, task, and run context before rendering a conversation.
-2. **Progressive evidence:** the default surface summarizes; raw events remain available for audit.
-3. **Permission at the boundary:** explain the requested capability and validate workspace paths before execution.
-4. **Durability over optimism:** terminal state, tool results, and resume behavior derive from persisted events.
-5. **Reversible delivery:** worktree isolation, diff, undo, push, and PR actions form one workflow.
+1. **Task 优先于 Chat：** 顶层信息结构是 Project、Target、Task 和 Run，而不是一串无归属消息。
+2. **事实优先于叙述：** Tool Result、Permission、Test、Diff 与 Terminal State 和模型正文分层展示。
+3. **高风险动作显式：** 用户在批准前看到 Capability、Path、Command 与后果。
+4. **失败状态可行动：** Error、Cancel、Resume、Retry 和 Recovery 都给出当前状态与下一步。
+5. **交付闭环：** Worktree、Diff、Undo、Push 与 PR 不离开当前 Task 上下文。
 
-## Key choices and tradeoffs
+## 状态与数据设计
 
 ### Append-only JSONL
 
-JSONL is simple to inspect and rebuild. Projectors derive the task/run UI and recovery state. The tradeoff is local-file concurrency and compaction complexity; v0.1 is single-user and does not pretend JSONL is a multi-tenant database.
+JSONL 是会话事实源。Projector 从事件重建 Task / Run UI；Snapshot 仅用于加速，不替代事实。v0.1 不从旧字段猜测当前 WorkspaceTarget、Run ID 或终态。
 
-### Loopback server plus Electron
+### Loopback Server + Electron
 
-The renderer receives product DTOs, not provider secrets or direct filesystem authority. The loopback server owns runtime and persistence. The boundary improves secret handling and testability, but the local OS user remains trusted and the server must never be publicly exposed.
+Renderer 只消费 DTO，不持有 Provider Secret 或 Runtime 权威状态。Server 组合 Runtime、Session、Git 与 Vault。Loopback 假设同一 OS 用户，Server 仍对请求字段和路径执行校验。
 
-### SDK built-ins plus CodePilot policy
+### SDK Built-ins + CodePilot Policy
 
-The SDK executes its built-in tools. CodePilot validates filesystem targets, freezes capability/permission preferences per run, and records decisions. Bash is not parsed into a false sandbox; OS isolation remains future work.
+SDK 负责模型迭代；CodePilot 负责 Workspace 路径、Run 身份、权限、持久化和投影。Bash 审批不是 Sandbox，界面必须明确这一点。
 
-### Breaking current schemas
+### Current Schema Breaking Change
 
-v0.1 removes application-owned legacy migrations and inferred projections. Saved registries, WorkspaceTarget identity, run IDs, tool results, and task progress must satisfy the current contract. This simplifies ownership and makes invalid state fail visibly, at the cost of discarding pre-release local state.
+v0.1 直接收敛到当前 Schema：Registry、WorkspaceTarget、Run ID 和恢复 Contract 缺失时明确失败，不增加兼容层或静默回退。
 
-## Main interaction
+## 信息架构
 
-Connect project -> create isolated task -> describe objective -> observe plan/tool call -> approve -> stream result -> review diff -> undo or deliver -> interrupt/resume if needed.
+左侧 Project 与最近 Task → 中央任务对话与 Agent Activity → 右侧 Context / Review Diff → 顶部 Workspace 与 Run 状态 → 设置中的 Provider / Permission / Skills / MCP。
 
-## Visual language
+## 视觉与无障碍
 
-Dense, calm desktop workbench; readable hierarchy; status conveyed by text plus color; model content is primary; technical evidence is available without dominating the task narrative. Motion communicates state only and respects reduced-motion settings.
+界面使用统一 Design Token、明确焦点态、稳定滚动和适合代码审查的信息密度。动效只表达状态变化，优先 `transform` / `opacity`，并遵守 `prefers-reduced-motion`。宽、窄窗口都必须保留任务与审查主路径。

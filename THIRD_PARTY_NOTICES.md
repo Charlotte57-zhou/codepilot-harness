@@ -1,7 +1,20 @@
-# Third-party notices
+# 第三方声明
 
-CodePilot depends on packages listed in `package-lock.json`; their license texts and notices remain authoritative. Release review must include `npm audit` and a dependency-license inventory before redistributing binaries.
+CodePilot 使用 `package-lock.json` 中记录的开源依赖。发布前应以锁定版本运行依赖许可证扫描，并根据各依赖要求保留其 License 与 Notice。
 
-CodePilot uses the Claude Agent SDK as its agent loop and studies public product behavior and public documentation from coding-agent products. The surrounding Project/Task/Run model, permission policy, transcript projection, recovery, and desktop experience are implemented as a clean-room local control plane. No claim is made that referenced products' internal implementations are reproduced.
+## 主要运行时依赖
 
-Claude and Anthropic are trademarks of Anthropic PBC. Codex, OpenAI, GitHub, Figma, Notion, Slack, Linear, Google, DeepSeek, and Moonshot names and marks belong to their respective owners. Their names may appear only to identify interoperability or comparison targets. This repository does not ship their logo artwork and is not endorsed by those owners.
+- Electron
+- Claude Agent SDK
+- Express
+- Zod
+- MCP SDK
+- Octokit
+
+具体版本与 Transitive Dependency 以 `package-lock.json` 为准。
+
+## Claude Code / Codex 参考边界
+
+CodePilot 参考公开文档、公开源码映射和可观察产品行为来理解 Coding Agent 的职责边界、状态不变量与交互模式。CodePilot 不分发非公开专有源码，不复制品牌素材，也不宣称与 Claude Code 或 Codex 完全一致。控制平面基于公开 SDK Contract 与本项目需求独立实现。
+
+第三方名称和商标归各自权利人所有，仅用于说明兼容性、依赖或比较边界，不代表背书。

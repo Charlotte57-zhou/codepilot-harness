@@ -1,24 +1,24 @@
-﻿name: Product proposal
-description: Propose a bounded workflow or architecture improvement
+name: 产品提案
+description: 提议边界明确的工作流或架构改进
 title: "[Proposal] "
 labels: [proposal]
 body:
   - type: textarea
     id: problem
     attributes:
-      label: User problem and evidence
+      label: 用户问题与证据
     validations:
       required: true
   - type: textarea
     id: ownership
     attributes:
-      label: State owner and end-to-end flow
-      description: Identify the owning module, contracts, failure/recovery path, and UI impact.
+      label: 状态所有者与端到端链路
+      description: 请指出责任模块、Contract、失败 / 恢复路径和 UI 影响。
     validations:
       required: true
   - type: textarea
     id: tradeoffs
     attributes:
-      label: Options and tradeoffs
+      label: 选项与权衡
     validations:
       required: true

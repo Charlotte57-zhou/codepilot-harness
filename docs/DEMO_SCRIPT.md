@@ -1,41 +1,41 @@
-# CodePilot 10-minute interview demo
+# CodePilot 十分钟面试演示
 
-## Setup
+## 演示准备
 
-Use the bundled demo repository and the deterministic fake runtime for repeatability. Keep a real provider as an optional appendix, not a dependency of the main proof.
+主流程使用仓库自带的 Demo Repository 和确定性 `fake` Runtime，保证重复演示稳定。真实 Provider 只作为可选附录，不作为核心证明的依赖。
 
-## 0:00-1:00 ? problem and model
+## 0:00–1:00｜用户问题与对象模型
 
-?CodePilot is a local control plane around one SDK agent loop. Project owns the repo, Task owns the objective and worktree, Run owns one attempt, and JSONL owns durable facts.? Show the Project/Task/Run hierarchy.
+开场说明：“CodePilot 是围绕单一 SDK Agent Loop 构建的本地控制平面。Project 管理仓库，Task 管理目标和 Worktree，Run 表示一次执行尝试，JSONL 保存持久事实。”随后展示 Project / Task / Run 层级。
 
-## 1:00-3:00 ? isolated task
+## 1:00–3:00｜隔离任务
 
-Create a new Task in an isolated worktree. Ask: ?Audit the fixture authentication flow, explain the risk, then add a focused regression test and the smallest fix.? Show the selected WorkspaceTarget and clean baseline.
+在隔离 Worktree 中创建 Task，输入：“审计 Fixture 的认证流程，解释风险，然后增加一个聚焦回归测试并做最小修复。”展示选中的 WorkspaceTarget 与干净 Baseline。
 
-## 3:00-5:30 ? observable agent behavior
+## 3:00–5:30｜可观察的 Agent 行为
 
-Open the run trace. Point out the frozen provider/permission/Skill snapshot, Read/Glob/Grep calls, and the bundled `harness-audit` Skill. When a write or shell action requests approval, explain the capability, workspace path, and consequence before approving.
+打开 Run Trace，指出冻结的 Provider、Permission Mode、Skill Snapshot，以及 Read / Glob / Grep 调用和内置 `harness-audit` Skill。当写文件或 Shell 操作请求许可时，先解释能力、Workspace Path 和后果，再批准。
 
-## 5:30-7:00 ? result and review
+## 5:30–7:00｜结果与审查
 
-Show the modified files, explicit tool results, tests, and Git diff. Separate model narrative from execution evidence. Explain that path validation runs before permission execution and that Bash permission is not an OS sandbox.
+展示修改文件、显式 Tool Result、测试结果和 Git Diff。明确区分模型叙述与执行证据。说明路径校验先于 Permission Execution，Bash Permission 不等于 OS Sandbox。
 
-## 7:00-8:00 ? reversibility
+## 7:00–8:00｜可逆交付
 
-Use Undo, show the diff return to baseline, then reapply/rerun if desired. This proves delivery control rather than a happy-path chat response.
+执行 Undo，确认 Diff 回到 Baseline；如有需要再重跑。这证明产品控制的是交付过程，而不只是生成一段成功叙述。
 
-## 8:00-9:00 ? interruption and recovery
+## 8:00–9:00｜中断与恢复
 
-Cancel or stop a run after a tool call, restart/resume, and show a new run ID using the latest task plus prior frozen preferences. Open the event detail to show paired tool result/repair records and explicit terminal state.
+在 Tool Call 后取消或停止 Run，再执行 Resume。展示系统使用最新 Task 和上次冻结偏好创建新 Run ID；打开事件详情，确认 Tool Result / Repair 成对以及显式终态。
 
-## 9:00-10:00 ? architecture and boundary
+## 9:00–10:00｜架构与边界
 
-Trace renderer -> loopback server -> runtime -> SDK tool -> JSONL -> projector -> renderer. Close with the honest boundary: Windows-first, unsigned, local trusted-user model, three provider profiles, no hosted edition, and partial rather than complete parity with mature coding agents.
+串讲 Renderer → Loopback Server → Runtime → SDK Tool → JSONL → Projector → Renderer。结尾诚实说明：Windows 优先、未签名、本地受信用户模型、三个 Provider Profile、没有 Hosted Edition，与成熟 Coding Agent 仅部分对齐。
 
-## Three-minute cut
+## 三分钟精简版
 
-Problem/model -> isolated Task -> one tool/permission -> diff/undo -> explicit local/security boundary.
+用户问题与对象模型 → 隔离 Task → 一次 Tool / Permission → Diff / Undo → 明确本地与安全边界。
 
-## Thirty-minute extension
+## 三十分钟扩展版
 
-Add provider vault configuration, MCP/Skill discovery, GitHub connection/push/PR, archive/activity views, raw JSONL recovery evidence, and selected automated tests.
+补充 Provider Vault、MCP / Skill Discovery、GitHub Connection / Push / PR、Archive / Activity、原始 JSONL 恢复证据和自动化测试。

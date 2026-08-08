@@ -1,15 +1,15 @@
-# Evaluation result index
+# 评测结果索引
 
-| Artifact | Meaning |
+| Artifact | 含义 |
 | --- | --- |
-| `pre-fix-2026-08-04.json` / `.md` | Valid frozen six-case comparison before the Bad Case fix: CodePilot 5/6, Claude CLI 6/6 |
-| `post-fix-readonly-2026-08-04.json` / `.md` | Targeted regression after the fix: both adapters 1/1; zero file changes |
+| `pre-fix-2026-08-04.json` / `.md` | 修复 Bad Case 前冻结的有效六用例对比：CodePilot 5/6，Claude CLI 6/6 |
+| `post-fix-readonly-2026-08-04.json` / `.md` | 修复后的目标回归：两个 Adapter 均为 1/1，文件修改数为零 |
 
-`latest.*` is a local rebuild target and is ignored. Raw records and workspaces are also ignored. A post-fix full-suite attempt coincided with provider connection instability and is excluded rather than blended into the valid comparison.
+`latest.*` 是本地重建目标，已被 Ignore；原始记录与 Workspace 也被 Ignore。修复后一次完整评测遇到 Provider Connection Instability，因此被排除，没有与有效对比混合。
 
-The committed evidence therefore supports two bounded claims only:
+已提交证据只支持两条边界明确的结论：
 
-1. Before the fix, CodePilot passed five of six small synthetic cases and failed the read-only completion contract; Claude CLI passed six of six.
-2. After the contract-owner fix, the exact failing case passed for both adapters. Unit tests also cover paraphrased global read-only instructions and scoped “change source, not tests” constraints.
+1. 修复前，CodePilot 在六个小型 Synthetic Case 中通过五个，并在只读 Completion Contract 上失败；Claude CLI 通过六个。
+2. 修复 Contract Owner 后，原失败用例在两个 Adapter 上都通过；单元测试还覆盖全局只读指令的改写，以及“改源码、不改测试”的局部约束。
 
-It does not support a claim that the entire six-case suite is 6/6 after the fix or that CodePilot is generally equivalent to Claude CLI.
+这些证据不支持“修复后完整六用例已达到 6/6”，也不支持“CodePilot 与 Claude CLI 普遍等价”。

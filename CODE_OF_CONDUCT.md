@@ -1,20 +1,30 @@
-﻿# Code of Conduct
+# 贡献者行为准则
 
-## Our pledge
+## 我们的承诺
 
-We pledge to make participation in this project respectful and harassment-free for everyone, regardless of background, identity, experience, or viewpoint.
+我们致力于为所有参与者提供友善、包容、无骚扰的协作环境，不因经验、身份、背景、能力或观点而区别对待。
 
-## Expected behavior
+## 期望行为
 
-- Be respectful, constructive, and specific.
-- Focus criticism on ideas, code, evidence, and product outcomes.
-- Accept responsibility, correct mistakes, and respect privacy.
-- Avoid harassment, threats, discriminatory language, sexualized attention, or publishing another person's private information.
+- 尊重不同意见，以事实、代码和可复现证据讨论问题；
+- 对产品边界、风险和未验证结论保持诚实；
+- 提供具体、建设性的反馈，并关注行为而非个人；
+- 主动保护他人的 Secret、源码、身份信息和会话内容；
+- 接受合理的维护决策和纠正。
 
-## Enforcement
+## 不可接受行为
 
-Report conduct concerns privately through the repository's Security Advisory channel. Maintainers may edit or remove contributions and may warn, temporarily restrict, or permanently ban participants whose behavior is harmful. Reports will be handled as confidentially as practical.
+- 骚扰、侮辱、威胁、歧视或持续的人身攻击；
+- 未经许可披露他人的个人信息、Credential、私有代码或安全问题；
+- 蓄意破坏讨论、Issue、Pull Request 或项目基础设施；
+- 其他在专业协作环境中明显不当的行为。
 
-## Attribution
+## 执行
 
-This policy is adapted from the Contributor Covenant, version 2.1: https://www.contributor-covenant.org/version/2/1/code_of_conduct.html
+请通过 Repository 的私密维护渠道报告行为问题。维护者会根据影响采取提醒、限制参与、临时或永久移除等措施，并尽可能保护报告者隐私。
+
+## 适用范围
+
+本准则适用于 Repository、Issue、Pull Request、Discussion、Release 及代表项目参与的公开空间。
+
+本文件参考 [Contributor Covenant 2.1](https://www.contributor-covenant.org/version/2/1/code_of_conduct/)，并按当前小型开源项目的维护方式进行了精简。

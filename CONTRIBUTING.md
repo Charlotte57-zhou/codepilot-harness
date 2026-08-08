@@ -1,36 +1,40 @@
-﻿# Contributing to CodePilot
+# 贡献指南
 
-Thank you for improving the local harness. Keep changes small, evidence-backed, and inside the product's stated boundaries.
+感谢你参与 CodePilot。请优先提交边界清楚、可验证、能改善真实 Agent 交付工作流的变更。
 
-## Development setup
+## 开始前
+
+1. 阅读 [产品定义](PRODUCT.md)、[系统架构](docs/ARCHITECTURE.md) 和 [质量门禁](docs/QUALITY_GATES.md)。
+2. 对较大产品或架构变更先创建 Proposal Issue，说明用户问题、状态所有者、端到端链路、失败恢复与选项权衡。
+3. 不添加兼容层、静默 Fallback、重复 Validator 或未经验证的抽象；v0.1 的 Contract 变化直接作为 Breaking Change 说明。
+
+## 本地开发
 
 ```powershell
-git clone https://github.com/Charlotte57-zhou/codepilot-harness.git
-cd codepilot-harness
 npm ci
 npm test
 npm run desktop
 ```
 
-Use Node.js 22+ on Windows. Never commit provider keys, `.env`, JSONL transcripts, application data, personal paths, screenshots containing private repositories, or generated binaries.
+请从当前代码、调用方和测试确认命令及 Contract，不以文档摘要替代代码事实。
 
-## Change process
+## Pull Request 要求
 
-1. Open an issue describing the user problem, current evidence, and intended scope.
-2. Create a focused branch and preserve unrelated work.
-3. Trace UI -> server -> runtime -> tool/model -> JSONL -> projector -> UI before changing ownership.
-4. Add or update tests for success, failure, cancellation, and recovery paths that are affected.
-5. Run `npm test`, `npm run check:context`, and `npm run check:privacy`.
-6. For UI changes, run `npm run ui:capture` and inspect the actual Electron window.
-7. Submit a pull request using the repository template.
+- 每个变更都能映射到具体用户问题或根因。
+- 明确状态所有者，并沿 `UI -> Server -> Runtime / Tool / Model -> JSONL -> Projector -> UI` 检查数据流。
+- 新行为具有聚焦测试；用户可见变更检查真实 Electron 窗口。
+- 运行适用的 `npm test`、`npm run check:context`、`npm run check:privacy`。
+- 不提交 Key、Token、Transcript、Runtime State、个人路径、私有源码、构建产物或无关改动。
+- Breaking Change 说明新 Contract、影响、迁移决策与回滚方式，而不是新增兼容路径。
 
-## Design rules
+## 文档语言
 
-- The Claude Agent SDK remains the only Agent Loop.
-- JSONL is the session fact source; projections and snapshots must be rebuildable.
-- One fact has one owner. Do not repair runtime failures with renderer-only state.
-- Tool paths must remain under the active workspace; permission approval is separate from OS isolation.
-- Do not add migration or compatibility paths for pre-0.1 private formats. Contract changes are breaking and must be documented.
-- Comparison claims use only aligned, partially aligned, or not aligned.
+面向用户和 GitHub 访客的文档以中文为主，代码标识、命令、协议名和必要术语保持原文。Apache-2.0 `LICENSE` 保留标准英文文本。
 
-By participating, you agree to follow the Code of Conduct and license your contribution under Apache-2.0.
+## Commit 与风格
+
+保持修改聚焦，复用现有模块和测试模式。不要批量格式化、覆盖他人未提交工作或把生成的私有 Artifact 加入 Git。
+
+## 行为准则与安全
+
+参与即表示同意遵守 [行为准则](CODE_OF_CONDUCT.md)。安全问题请按 [安全策略](SECURITY.md) 私密报告。

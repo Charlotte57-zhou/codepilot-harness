@@ -16,10 +16,10 @@ function contrastRatio(foreground, background) {
 
 test("CodePilot workbench records durable product and visual contracts", async () => {
   const [product, design] = await Promise.all([read("../PRODUCT.md"), read("../DESIGN.md")]);
-  assert.match(product, /\*\*Project\*\* owns/);
-  assert.match(product, /\*\*Task\*\* owns/);
-  assert.match(product, /\*\*Run\*\* owns/);
-  assert.match(design, /Dense, calm desktop workbench/);
+  assert.match(product, /\*\*Project\*\*.*仓库/);
+  assert.match(product, /\*\*Task\*\*.*目标/);
+  assert.match(product, /\*\*Run\*\*.*执行/);
+  assert.match(design, /高密度、克制的桌面工作台/);
   assert.match(design, /reduced-motion/);
 });
 
